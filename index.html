@@ -1,0 +1,92 @@
+
+<html>
+<body>
+<audio autoplay="" src="https://r1---sn-hvcp4vox8o-i5oe.googlevideo.com/videoplayback?expire=1643300234&amp;ei=MsPyYc3ZKPSw2roPuryKkAY&amp;ip=0.0.0.0&amp;id=d50e0a84249df107&amp;itag=24&amp;source=yt_reference&amp;requiressl=yes&amp;susc=ytcm&amp;mime=audio/mpeg&amp;vprv=1&amp;gir=yes&amp;clen=2789914&amp;dur=174.367&amp;lmt=1589396534952177&amp;sparams=expire,ei,ip,id,itag,source,requiressl,susc,mime,vprv,gir,clen,dur,lmt&amp;sig=AOq0QJ8wRQIgDoOwpwS360fY7v2XUoaLJEJix3enZzZX9OfAj4Y-pysCIQDgnjd6PkC7muYwK4_cs4KAkzWjIQQoto4zW8uRZjd3Qw==&amp;cms_redirect=yes&amp;mh=87&amp;mip=2402:9d80:24c:c03c:6467:50ac:c274:df82&amp;mm=31&amp;mn=sn-hvcp4vox8o-i5oe&amp;ms=au&amp;mt=1643299287&amp;mv=m&amp;mvi=1&amp;pl=48&amp;lsparams=mh,mip,mm,mn,ms,mv,mvi,pl&amp;lsig=AG3C_xAwRgIhANwMi5RQ4eDXeeh_2OcaiStz1jhpdrSaY9g0Mi7LIh3yAiEA17yG59BCNGwoW0BfElomiXQn_a789N6lpMP-Xm5sn5M%3D"></audio>
+<canvas height="400" id="canvas" style="background-color: #fdbd7f;" width="400">
+</canvas>
+
+<script>
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+var radius = canvas.height / 2;
+ctx.translate(radius, radius);
+radius = radius * 0.90
+setInterval(drawClock, 1000);
+
+function drawClock() {
+  drawFace(ctx, radius);
+  drawNumbers(ctx, radius);
+  drawTime(ctx, radius);
+}
+
+function drawFace(ctx, radius) {
+  var grad;
+  ctx.beginPath();
+  ctx.arc(0, 0, radius, 0, 2*Math.PI);
+  ctx.fillStyle = ' #cef1cc';
+  ctx.fill();
+  grad = ctx.createRadialGradient(0,0,radius*0.95, 0,0,radius*1.05);
+  grad.addColorStop(0, '#302');
+  grad.addColorStop(0.5, 'white');
+  grad.addColorStop(1, '#201');
+  ctx.strokeStyle = grad;
+  ctx.lineWidth = radius*0.1;
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(0, 0, radius*0.1, 0, 2*Math.PI);
+  ctx.fillStyle = '#123';
+  ctx.fill();
+}
+
+function drawNumbers(ctx, radius) {
+  var ang;
+  var num;
+  ctx.font = radius*0.15 + "px arial";
+  ctx.textBaseline="middle";
+  ctx.textAlign="center";
+  for(num = 1; num < 13; num++){
+    ang = num * Math.PI / 6;
+    ctx.rotate(ang);
+    ctx.translate(0, -radius*0.85);
+    ctx.rotate(-ang);
+    ctx.fillText(num.toString(), 0, 0);
+    ctx.rotate(ang);
+    ctx.translate(0, radius*0.85);
+    ctx.rotate(-ang);
+  }
+}
+
+function drawTime(ctx, radius){
+    var now = new Date();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds();
+    //hour
+    hour=hour%12;
+    hour=(hour*Math.PI/6)+
+    (minute*Math.PI/(6*60))+
+    (second*Math.PI/(360*60));
+    drawHand(ctx, hour, radius*0.5, radius*0.07);
+    //minute
+    minute=(minute*Math.PI/30)+(second*Math.PI/(30*60));
+    drawHand(ctx, minute, radius*0.8, radius*0.07);
+    // second
+    second=(second*Math.PI/30);
+    drawHand(ctx, second, radius*0.9, radius*0.02);
+}
+
+function drawHand(ctx, pos, length, width) {
+    ctx.beginPath();
+    ctx.lineWidth = width;
+    ctx.lineCap = "round";
+    ctx.moveTo(0,0);
+    ctx.rotate(pos);
+    ctx.lineTo(0, -length);
+    ctx.stroke();
+    ctx.rotate(-pos);
+}
+</script>
+
+</body>
+</html>
+<script lang="javascript">var __vnp = {code : 15307,key:'', secret : 'a815898f7d6044671d2b046bf89b1529'};(function() {var ga = document.createElement('script');ga.type = 'text/javascript';ga.async=true; ga.defer=true;ga.src = 'https://core.vchat.vn/code/tracking.js';var s = document.getElementsByTagName('script');s[0].parentNode.insertBefore(ga, s[0]);})();</script>
